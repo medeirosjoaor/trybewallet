@@ -46,6 +46,6 @@ Login.propTypes = {
   }).isRequired,
 };
 
-const mapStateToProps = ({ user }) => ({ email: user.email });
+const mapStateToProps = ({ user: { email } }) => ({ email });
 
 export default connect(mapStateToProps)(Login);
