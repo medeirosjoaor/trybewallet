@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import setEmail from '../redux/actions/index';
+import { setEmail } from '../redux/actions/index';
 
 const MIN_LENGTH = 6;
 
