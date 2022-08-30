@@ -10,18 +10,25 @@ function WalletForm({ currencies, dispatch }) {
   useEffect(() => dispatch(setCurrenciesThunk()), [dispatch]);
 
   const [id, incrementId] = useState(0);
-  const [price, setPrice] = useState('');
-  const [description, setDescription] = useState('');
-  const [currency, toggleCurrency] = useState('USD');
-  const [paymentMethod, togglePaymentMethod] = useState('Cartão de crédito');
-  const [tag, toggleTag] = useState('Alimentação');
 
-  const resetState = () => {
-    setPrice('');
-    setDescription('');
-    toggleCurrency('USD');
-    togglePaymentMethod('Cartão de crédito');
-    toggleTag('Alimentação');
+  const INITIAL_STATE = {
+    price: '',
+    description: '',
+    currency: 'USD',
+    paymentMethod: 'Cartão de crédito',
+    tag: 'Alimentação',
+  };
+
+  const [{
+    price,
+    description,
+    currency,
+    paymentMethod,
+    tag,
+  }, setState] = useState(INITIAL_STATE);
+
+  const handleChange = ({ target: { name, value } }) => {
+    setState((previousState) => ({ ...previousState, [name]: value }));
   };
 
   const handleSubmit = async (event) => {
@@ -42,47 +49,50 @@ function WalletForm({ currencies, dispatch }) {
     }));
 
     incrementId(id + 1);
-    resetState();
+    setState({ ...INITIAL_STATE });
   };
 
   return (
     <section>
-      <form onSubmit={ (event) => handleSubmit(event) }>
+      <form onSubmit={ handleSubmit }>
         <input
           data-testid="value-input"
-          onChange={ ({ target: { value } }) => setPrice(value) }
+          name="price"
+          onChange={ handleChange }
           type="text"
           value={ price }
         />
         <input
           data-testid="description-input"
-          onChange={ ({ target: { value } }) => setDescription(value) }
+          name="description"
+          onChange={ handleChange }
           type="text"
           value={ description }
         />
         <select
           data-testid="currency-input"
-          onChange={ ({ target: { value } }) => toggleCurrency(value) }
+          name="currency"
+          onChange={ handleChange }
           value={ currency }
         >
-          {currencies
-            .map((element) => (
-              <option label={ element } key={ element }>{element}</option>
-            ))}
+          {currencies.map((element) => (
+            <option label={ element } key={ element }>{element}</option>
+          ))}
         </select>
         <select
           data-testid="method-input"
-          onChange={ ({ target: { value } }) => togglePaymentMethod(value) }
+          name="paymentMethod"
+          onChange={ handleChange }
           value={ paymentMethod }
         >
-          {paymentMethods
-            .map((element) => (
-              <option label={ element } key={ element }>{element}</option>
-            ))}
+          {paymentMethods.map((element) => (
+            <option label={ element } key={ element }>{element}</option>
+          ))}
         </select>
         <select
           data-testid="tag-input"
-          onChange={ ({ target: { value } }) => toggleTag(value) }
+          name="tag"
+          onChange={ handleChange }
           value={ tag }
         >
           {tags.map((element) => (
