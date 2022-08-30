@@ -43,9 +43,18 @@ const deleteExpense = (number) => ({
   type: 'DELETE_EXPENSE',
 });
 
+const setIdToEdit = (number, boolean) => ({
+  payload: {
+    number,
+    boolean,
+  },
+  type: 'SET_ID_TO_EDIT',
+});
+
 export {
   setEmail,
   setCurrenciesThunk,
   setExpense,
   deleteExpense,
+  setIdToEdit,
 };

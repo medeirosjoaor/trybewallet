@@ -2,46 +2,45 @@ const INITIAL_STATE = {
   currencies: [],
   editor: false,
   expenses: [],
-  idToEdit: undefined,
+  idToEdit: Date.now(),
 };
 
 export default function wallet(state = INITIAL_STATE, action) {
-  if (action.type === 'SET_CURRENCIES') {
+  switch (action.type) {
+  case 'SET_CURRENCIES':
     return state;
-  }
-
-  if (action.type === 'SET_CURRENCIES_SUCESS') {
+  case 'SET_CURRENCIES_SUCESS':
     return {
       ...state,
       currencies: Object
         .keys(action.payload)
         .filter((element) => element !== 'USDT'),
     };
-  }
-
-  if (action.type === 'SET_CURRENCIES_FAILURE') {
+  case 'SET_CURRENCIES_FAILURE':
     return {
       ...state,
       error: action.error,
     };
-  }
-
-  if (action.type === 'SET_EXPENSE') {
+  case 'SET_EXPENSE':
     return {
       ...state,
       expenses: [
         ...state.expenses,
         action.payload,
-      ],
+      ].sort((a, b) => a.id - b.id),
     };
-  }
-
-  if (action.type === 'DELETE_EXPENSE') {
+  case 'DELETE_EXPENSE':
     return {
       ...state,
       expenses: state.expenses.filter(({ id }) => id !== action.payload),
     };
+  case 'SET_ID_TO_EDIT':
+    return {
+      ...state,
+      editor: action.payload.boolean,
+      idToEdit: action.payload.number,
+    };
+  default:
+    return state;
   }
-
-  return state;
 }

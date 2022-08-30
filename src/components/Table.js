@@ -2,10 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import headers from '../helpers/headers';
-import { deleteExpense } from '../redux/actions';
+import { deleteExpense, setIdToEdit } from '../redux/actions';
 
 function Table({ dispatch, expenses }) {
-  const handleClick = (id) => dispatch(deleteExpense(id));
+  const handleEditClick = (id) => dispatch(setIdToEdit(id, true));
+  const handleDeleteClick = (id) => dispatch(deleteExpense(id));
 
   return (
     <section>
@@ -29,8 +30,15 @@ function Table({ dispatch, expenses }) {
                 <td>Real</td>
                 <td>
                   <button
+                    data-testid="edit-btn"
+                    onClick={ () => handleEditClick(id) }
+                    type="button"
+                  >
+                    Editar despesa
+                  </button>
+                  <button
                     data-testid="delete-btn"
-                    onClick={ () => handleClick(id) }
+                    onClick={ () => handleDeleteClick(id) }
                     type="button"
                   >
                     Excluir
