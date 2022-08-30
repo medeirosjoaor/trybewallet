@@ -2,7 +2,7 @@ const INITIAL_STATE = {
   currencies: [],
   editor: false,
   expenses: [],
-  idToEdit: 0,
+  idToEdit: undefined,
 };
 
 export default function wallet(state = INITIAL_STATE, action) {
@@ -33,6 +33,13 @@ export default function wallet(state = INITIAL_STATE, action) {
         ...state.expenses,
         action.payload,
       ],
+    };
+  }
+
+  if (action.type === 'DELETE_EXPENSE') {
+    return {
+      ...state,
+      expenses: state.expenses.filter(({ id }) => id !== action.payload),
     };
   }
 

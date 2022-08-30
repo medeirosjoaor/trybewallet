@@ -38,8 +38,14 @@ const setExpense = (object) => ({
   type: 'SET_EXPENSE',
 });
 
+const deleteExpense = (number) => ({
+  payload: number,
+  type: 'DELETE_EXPENSE',
+});
+
 export {
   setEmail,
   setCurrenciesThunk,
   setExpense,
+  deleteExpense,
 };

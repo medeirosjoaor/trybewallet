@@ -2,14 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import headers from '../helpers/headers';
+import { deleteExpense } from '../redux/actions';
 
-function Table({ expenses }) {
+function Table({ dispatch, expenses }) {
+  const handleClick = (id) => dispatch(deleteExpense(id));
+
   return (
     <section>
       <table>
         <thead>
           <tr>
-            {headers.map((header) => <td key={ header }>{header}</td>)}
+            {headers.map((header) => <th key={ header }>{header}</th>)}
           </tr>
         </thead>
         <tbody>
@@ -24,6 +27,15 @@ function Table({ expenses }) {
                 <td>{parseFloat(exchangeRates[currency].ask).toFixed(2)}</td>
                 <td>{(value * exchangeRates[currency].ask).toFixed(2)}</td>
                 <td>Real</td>
+                <td>
+                  <button
+                    data-testid="delete-btn"
+                    onClick={ () => handleClick(id) }
+                    type="button"
+                  >
+                    Excluir
+                  </button>
+                </td>
               </tr>
             ))}
         </tbody>
@@ -35,6 +47,7 @@ function Table({ expenses }) {
 const mapStateToProps = ({ wallet: { expenses } }) => ({ expenses });
 
 Table.propTypes = {
+  dispatch: propTypes.func.isRequired,
   expenses: propTypes.arrayOf(propTypes.shape).isRequired,
 };
 
