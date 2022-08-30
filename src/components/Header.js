@@ -8,10 +8,7 @@ function Header({ email, expenses }) {
     <section>
       <p data-testid="email-field">{`Olá, ${email}`}</p>
       <p data-testid="total-field">
-        {new Intl.NumberFormat('pt-BR', {
-          style: 'currency',
-          currency: 'BRL',
-        }).format(sum(expenses))}
+        {sum(expenses)}
       </p>
       <p data-testid="header-currency-field">BRL</p>
     </section>
@@ -25,7 +22,7 @@ const mapStateToProps = ({
 
 Header.propTypes = {
   email: propTypes.string.isRequired,
-  expenses: propTypes.arrayOf(propTypes.number).isRequired,
+  expenses: propTypes.arrayOf(propTypes.shape).isRequired,
 };
 
 export default connect(mapStateToProps)(Header);

@@ -26,5 +26,15 @@ export default function wallet(state = INITIAL_STATE, action) {
     };
   }
 
+  if (action.type === 'SET_EXPENSE') {
+    return {
+      ...state,
+      expenses: [
+        ...state.expenses,
+        action.payload,
+      ],
+    };
+  }
+
   return state;
 }

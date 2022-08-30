@@ -19,7 +19,7 @@ const setCurrenciesFailure = (error) => ({
   type: 'SET_CURRENCIES_FAILURE',
 });
 
-function fetchCurrenciesThunk() {
+function setCurrenciesThunk() {
   return async (dispatch) => {
     dispatch(setCurrencies());
 
@@ -33,7 +33,13 @@ function fetchCurrenciesThunk() {
   };
 }
 
+const setExpense = (object) => ({
+  payload: object,
+  type: 'SET_EXPENSE',
+});
+
 export {
   setEmail,
-  fetchCurrenciesThunk,
+  setCurrenciesThunk,
+  setExpense,
 };
