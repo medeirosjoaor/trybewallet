@@ -67,6 +67,7 @@
       "/src/serviceWorker.js",
       "/redux/store",
       "/src/tests/"
-    ]
+    ],
+    "resetMocks": false
   }
 }
